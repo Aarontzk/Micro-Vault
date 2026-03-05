@@ -128,6 +128,7 @@ router.post('/login', [
   }
 
   const { email, password } = req.body;
+  console.log("EMAIL AFTER NORMALIZE:", email);
   console.log("DB URL LOGIN:", process.env.DATABASE_URL);
   console.log("=== LOGIN DEBUG START ===");
   console.log("EMAIL INPUT:", email);
