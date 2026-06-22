@@ -1,4 +1,6 @@
 // Bilingual UI strings. Default language: Indonesian (id).
+// Domain term for a collection item is "Isolat" (id) / "Isolate" (en),
+// matching the lab's source data ("Kode Isolat", "Asal Isolat").
 export const translations = {
   id: {
     common: {
@@ -28,10 +30,10 @@ export const translations = {
     list: {
       title: 'Koleksi Kultur',
       clearance: 'Klirens Biosafety: Level',
-      addNew: 'Tambah Strain',
+      addNew: 'Tambah Isolat',
       filters: 'Filter',
       search: 'Cari',
-      searchPlaceholder: 'Cari kode strain, genus, atau lokasi…',
+      searchPlaceholder: 'Cari kode isolat, genus, atau lokasi…',
       potentials: 'Potensi',
       viewCards: 'Kartu',
       viewTable: 'Tabel',
@@ -44,7 +46,7 @@ export const translations = {
       allMatching: 'Semua hasil',
       viewDetails: 'Lihat Detail',
       view: 'Lihat',
-      fetchError: 'Gagal memuat strain',
+      fetchError: 'Gagal memuat isolat',
       exportError: 'Ekspor gagal',
     },
     fields: {
@@ -64,7 +66,7 @@ export const translations = {
       stock: 'Stok',
       noPotentials: 'Tidak ada potensi tercatat',
       unidentified: 'Belum teridentifikasi',
-      strainCode: 'Kode Strain',
+      strainCode: 'Kode Isolat',
     },
     types: {
       all: 'Semua Tipe',
@@ -88,13 +90,13 @@ export const translations = {
     sort: {
       newest: 'Terbaru',
       oldest: 'Terlama',
-      code: 'Kode strain',
+      code: 'Kode isolat',
       name: 'Genus/Spesies',
       type: 'Tipe',
       bsl: 'Biosafety Level',
     },
     stats: {
-      total: 'Total Strain',
+      total: 'Total Isolat',
       shown: 'Hasil filter',
       byType: 'Per Tipe',
       sequenced: 'Genom tersekuens',
@@ -109,8 +111,8 @@ export const translations = {
       next: 'Berikutnya',
     },
     empty: {
-      title: 'Tidak ada strain ditemukan',
-      subtitle: 'Coba ubah filter atau tambahkan strain baru.',
+      title: 'Tidak ada isolat ditemukan',
+      subtitle: 'Coba ubah filter atau tambahkan isolat baru.',
     },
     detail: {
       createdBy: 'Dibuat oleh',
@@ -123,11 +125,11 @@ export const translations = {
       no: 'Tidak',
     },
     form: {
-      addTitle: 'Tambah Strain Baru',
-      editTitle: 'Ubah Strain',
-      saveStrain: 'Simpan Strain',
-      validationRequired: 'Kode strain dan tipe mikroorganisme wajib diisi',
-      saveError: 'Gagal menyimpan strain. Coba lagi.',
+      addTitle: 'Tambah Isolat Baru',
+      editTitle: 'Ubah Isolat',
+      saveStrain: 'Simpan Isolat',
+      validationRequired: 'Kode isolat dan tipe mikroorganisme wajib diisi',
+      saveError: 'Gagal menyimpan isolat. Coba lagi.',
       phStrain: 'mis. LI. 1-3',
       phGenus: 'mis. Bacillus subtilis',
       phSample: 'mis. Tanah, Air',
@@ -140,8 +142,8 @@ export const translations = {
       phStock: 'mis. Tersedia',
     },
     confirm: {
-      delete: 'Yakin hapus strain {code}?',
-      deleteFailed: 'Gagal menghapus strain',
+      delete: 'Yakin hapus isolat {code}?',
+      deleteFailed: 'Gagal menghapus isolat',
     },
   },
   en: {
@@ -172,10 +174,10 @@ export const translations = {
     list: {
       title: 'Culture Collection',
       clearance: 'Biosafety Clearance: Level',
-      addNew: 'Add Strain',
+      addNew: 'Add Isolate',
       filters: 'Filters',
       search: 'Search',
-      searchPlaceholder: 'Search strain code, genus, or location…',
+      searchPlaceholder: 'Search isolate code, genus, or location…',
       potentials: 'Potentials',
       viewCards: 'Cards',
       viewTable: 'Table',
@@ -188,7 +190,7 @@ export const translations = {
       allMatching: 'All results',
       viewDetails: 'View Details',
       view: 'View',
-      fetchError: 'Failed to fetch strains',
+      fetchError: 'Failed to fetch isolates',
       exportError: 'Export failed',
     },
     fields: {
@@ -208,7 +210,7 @@ export const translations = {
       stock: 'Stock',
       noPotentials: 'No potentials recorded',
       unidentified: 'Unidentified',
-      strainCode: 'Strain Code',
+      strainCode: 'Isolate Code',
     },
     types: {
       all: 'All Types',
@@ -232,13 +234,13 @@ export const translations = {
     sort: {
       newest: 'Newest',
       oldest: 'Oldest',
-      code: 'Strain code',
+      code: 'Isolate code',
       name: 'Genus/Species',
       type: 'Type',
       bsl: 'Biosafety Level',
     },
     stats: {
-      total: 'Total Strains',
+      total: 'Total Isolates',
       shown: 'Filtered',
       byType: 'By Type',
       sequenced: 'Genome sequenced',
@@ -253,8 +255,8 @@ export const translations = {
       next: 'Next',
     },
     empty: {
-      title: 'No strains found',
-      subtitle: 'Try adjusting your filters or add a new strain.',
+      title: 'No isolates found',
+      subtitle: 'Try adjusting your filters or add a new isolate.',
     },
     detail: {
       createdBy: 'Created by',
@@ -267,11 +269,11 @@ export const translations = {
       no: 'No',
     },
     form: {
-      addTitle: 'Add New Strain',
-      editTitle: 'Edit Strain',
-      saveStrain: 'Save Strain',
-      validationRequired: 'Strain code and microorganism type are required',
-      saveError: 'Failed to save strain. Please try again.',
+      addTitle: 'Add New Isolate',
+      editTitle: 'Edit Isolate',
+      saveStrain: 'Save Isolate',
+      validationRequired: 'Isolate code and microorganism type are required',
+      saveError: 'Failed to save isolate. Please try again.',
       phStrain: 'e.g., LI. 1-3',
       phGenus: 'e.g., Bacillus subtilis',
       phSample: 'e.g., Soil, Water',
@@ -284,8 +286,8 @@ export const translations = {
       phStock: 'e.g., Available',
     },
     confirm: {
-      delete: 'Delete strain {code}?',
-      deleteFailed: 'Failed to delete strain',
+      delete: 'Delete isolate {code}?',
+      deleteFailed: 'Failed to delete isolate',
     },
   },
 };

@@ -1,7 +1,7 @@
 import { POTENTIALS } from './strainConstants';
 
 const COLUMNS = [
-  ['strain_code', 'Strain Code'],
+  ['strain_code', 'Isolate Code'],
   ['microorganism_type', 'Type'],
   ['genus_species', 'Genus/Species'],
   ['sample_type', 'Sample Type'],
