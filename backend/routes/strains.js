@@ -6,9 +6,9 @@ const router = express.Router();
 // GET /api/strains - List strains with pagination and filters
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const { 
-      page = 1, 
-      limit = 20, 
+    let {
+      page = 1,
+      limit = 20,
       microorganism_type,  // NEW: BAKTERI, YEAST, KAPANG, ACTINOMYCETES
       genus, 
       sample_type,         // NEW: Tanah, Air, dll
@@ -27,6 +27,9 @@ router.get('/', authenticateToken, async (req, res) => {
       order = 'DESC'
     } = req.query;
 
+    // Cap page size to avoid unbounded result sets.
+    limit = Math.min(Math.max(parseInt(limit) || 20, 1), 1000);
+    page = Math.max(parseInt(page) || 1, 1);
     const offset = (page - 1) * limit;
 
     // Build query
