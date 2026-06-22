@@ -9,7 +9,6 @@ const router = express.Router();
 // POST /api/auth/register
 // POST /api/auth/register (DISABLED)
 router.post('/register', async (req, res) => {
-  console.log("DB URL REGISTER:", process.env.DATABASE_URL);
   try {
     // 1. Cek apakah admin sudah ada
     const adminCheck = await db.query(
@@ -128,10 +127,6 @@ router.post('/login', [
   }
 
   const { email, password } = req.body;
-  console.log("EMAIL AFTER NORMALIZE:", email);
-  console.log("DB URL LOGIN:", process.env.DATABASE_URL);
-  console.log("=== LOGIN DEBUG START ===");
-  console.log("EMAIL INPUT:", email);
 
   try {
     const result = await db.query(
@@ -142,27 +137,17 @@ router.post('/login', [
       [email]
     );
 
-    console.log("DB RESULT:", result.rows);
-
     if (result.rows.length === 0) {
-      console.log("USER NOT FOUND IN THIS DATABASE");
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const user = result.rows[0];
 
-    console.log("HASH FROM DB:", user.password_hash);
-    console.log("DELETED_AT:", user.deleted_at);
-
     const isValidPassword = await bcryptjs.compare(password, user.password_hash);
-    console.log("COMPARE RESULT:", isValidPassword);
 
     if (!isValidPassword) {
-      console.log("PASSWORD MISMATCH");
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-
-    console.log("JWT_SECRET EXISTS?:", !!process.env.JWT_SECRET);
 
     const token = jwt.sign(
       { 
@@ -175,17 +160,13 @@ router.post('/login', [
       { expiresIn: '7d' }
     );
 
-    console.log("JWT GENERATED SUCCESS");
-
     await db.query(
       `INSERT INTO audit_logs (action, resource_type, resource_id, user_id, ip_address, details)
        VALUES ($1, $2, $3, $4, $5, $6)`,
       ['USER_LOGIN', 'user', user.id, user.id, req.ip, JSON.stringify({ email })]
     );
 
-    console.log("=== LOGIN SUCCESS ===");
-
-    res.json({ 
+    res.json({
       token, 
       user: {
         id: user.id,

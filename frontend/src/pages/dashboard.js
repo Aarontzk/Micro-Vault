@@ -13,25 +13,21 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex items-center space-x-2">
-                <img src="/logo192.png" alt="MicroVault Logo" className="h-8 w-8" />
-                <h1 className="text-xl font-bold text-gray-900">MicroVault</h1>
-              </div>
+    <div className="min-h-screen bg-background">
+      {/* Sticky nav — backdrop blur, 56px, bottom border */}
+      <nav className="sticky top-0 z-40 h-14 bg-surface/80 backdrop-blur border-b border-edge">
+        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-full">
+            <div className="flex items-center space-x-2">
+              <img src="/logo192.png" alt="MicroVault Logo" className="h-7 w-7" />
+              <span className="text-lg font-bold text-ink tracking-tighter">MicroVault</span>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-700">
-                {user?.full_name} ({user?.role})
+              <span className="text-sm text-ink-secondary hidden sm:inline">
+                {user?.full_name}{' '}
+                <span className="text-neutral">({user?.role})</span>
               </span>
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm"
-              >
+              <button onClick={handleLogout} className="mv-btn-danger mv-btn-sm">
                 Logout
               </button>
             </div>
@@ -39,7 +35,7 @@ function Dashboard() {
         </div>
       </nav>
 
-      {/* Content - Strain List */}
+      {/* Content — Strain List */}
       <StrainList />
     </div>
   );

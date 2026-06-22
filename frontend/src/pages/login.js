@@ -5,12 +5,12 @@ import { useAuth } from '../utils/AuthContext';
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -39,30 +39,32 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
+    <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        {/* Brand */}
+        <div className="text-center mb-8">
           <div className="flex justify-center">
-            <img src="/logo192.png" alt="MicroVault Logo" className="h-20 w-20" />
+            <img src="/logo192.png" alt="MicroVault Logo" className="h-16 w-16" />
           </div>
-          <h2 className="mt-4 text-center text-3xl font-extrabold text-gray-900">
+          <h1 className="mt-5 text-4xl font-bold text-ink tracking-tighter">
             MicroVault
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          </h1>
+          <p className="mt-2 text-sm text-ink-secondary">
             Microbial Data Repository System
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-              {error}
-            </div>
-          )}
+        {/* Card */}
+        <div className="mv-panel p-8">
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            {error && (
+              <div className="bg-error/10 border border-error/30 text-error px-4 py-3 rounded-md text-sm">
+                {error}
+              </div>
+            )}
 
-          <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
+              <label htmlFor="email" className="mv-label">Email address</label>
               <input
                 id="email"
                 name="email"
@@ -71,13 +73,13 @@ function Login() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                placeholder="Email address"
+                className="mv-input"
+                placeholder="you@lab.com"
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+              <label htmlFor="password" className="mv-label">Password</label>
               <input
                 id="password"
                 name="password"
@@ -86,28 +88,20 @@ function Login() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                placeholder="Password"
+                className="mv-input"
+                placeholder="••••••••"
               />
             </div>
-          </div>
 
-          <div>
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              className="mv-btn-primary mv-btn-lg w-full"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? 'Signing in…' : 'Sign in'}
             </button>
-          </div>
-
-          <div className="text-center">
-            <p className="text-xs text-gray-500">
-              Demo: bfq@lab.com / Azka3404Strong!
-            </p>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
