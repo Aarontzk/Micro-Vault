@@ -14,13 +14,13 @@ const DEFAULT_FILTERS = {
   microorganism_type: '',
   sample_type: '',
   biosafety: '',
-  sortIdx: 0,
+  sort: 'created_at',
+  order: 'DESC',
   potentials: {},
 };
 
 function buildParams(filters, page, limit) {
-  const [sortCol, sortOrder] = SORT_OPTIONS[filters.sortIdx];
-  const params = { page, limit, sort: sortCol, order: sortOrder };
+  const params = { page, limit, sort: filters.sort, order: filters.order };
   if (filters.microorganism_type) params.microorganism_type = filters.microorganism_type;
   if (filters.sample_type) params.sample_type = filters.sample_type;
   if (filters.biosafety) params.biosafety = filters.biosafety;
@@ -84,6 +84,13 @@ function StrainList() {
   const clearFilters = () => {
     setFilters(DEFAULT_FILTERS);
     setPagination((prev) => ({ ...prev, page: 1 }));
+  };
+  const handleSort = (col) => {
+    updateFilter(
+      filters.sort === col
+        ? { order: filters.order === 'ASC' ? 'DESC' : 'ASC' }
+        : { sort: col, order: 'ASC' },
+    );
   };
   const activeFilterCount =
     (filters.microorganism_type ? 1 : 0) +
@@ -238,8 +245,13 @@ function StrainList() {
             </div>
             <div>
               <label className="mv-label">{t('list.sortBy')}</label>
-              <select className="mv-input" value={filters.sortIdx}
-                onChange={(e) => updateFilter({ sortIdx: parseInt(e.target.value) })}>
+              <select className="mv-input"
+                value={SORT_OPTIONS.findIndex(([c, o]) => c === filters.sort && o === filters.order)}
+                onChange={(e) => {
+                  const [c, o] = SORT_OPTIONS[parseInt(e.target.value)];
+                  updateFilter({ sort: c, order: o });
+                }}>
+                <option value={-1} disabled>—</option>
                 {SORT_OPTIONS.map(([, , key], i) => <option key={key} value={i}>{t(`sort.${key}`)}</option>)}
               </select>
             </div>
@@ -294,6 +306,7 @@ function StrainList() {
 
       {!loading && strains.length > 0 && view === 'table' && (
         <StrainTable strains={strains} t={t} typeLabel={typeLabel} user={user}
+          sort={filters.sort} order={filters.order} onSort={handleSort}
           onView={handleViewDetails} onEdit={handleEdit} onDelete={handleDelete} />
       )}
 
@@ -399,17 +412,31 @@ function StrainCard({ strain, t, typeLabel, user, onView, onEdit, onDelete }) {
 }
 
 // --- Table ---
-function StrainTable({ strains, t, typeLabel, user, onView, onEdit, onDelete }) {
+function SortableTh({ label, col, sort, order, onSort }) {
+  const active = sort === col;
+  return (
+    <th className="px-4 py-3 font-medium">
+      <button type="button" onClick={() => onSort(col)}
+        className={`inline-flex items-center gap-1 uppercase tracking-wide hover:text-ink ${active ? 'text-primary' : ''}`}>
+        {label}
+        <span className="text-[10px]">{active ? (order === 'ASC' ? '▲' : '▼') : '↕'}</span>
+      </button>
+    </th>
+  );
+}
+
+function StrainTable({ strains, t, typeLabel, user, sort, order, onSort, onView, onEdit, onDelete }) {
+  const thProps = { sort, order, onSort };
   return (
     <div className="mv-panel overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-edge text-left text-[11px] uppercase tracking-wide text-neutral">
-            <th className="px-4 py-3 font-medium">{t('fields.strainCode')}</th>
-            <th className="px-4 py-3 font-medium">{t('fields.type')}</th>
-            <th className="px-4 py-3 font-medium">{t('fields.genusSpecies')}</th>
-            <th className="px-4 py-3 font-medium">{t('fields.sampleType')}</th>
-            <th className="px-4 py-3 font-medium">BSL</th>
+            <SortableTh label={t('fields.strainCode')} col="strain_code" {...thProps} />
+            <SortableTh label={t('fields.type')} col="microorganism_type" {...thProps} />
+            <SortableTh label={t('fields.genusSpecies')} col="genus_species" {...thProps} />
+            <SortableTh label={t('fields.sampleType')} col="sample_type" {...thProps} />
+            <SortableTh label="BSL" col="biosafety_level" {...thProps} />
             <th className="px-4 py-3 font-medium">{t('fields.potentials')}</th>
             <th className="px-4 py-3 font-medium text-right"></th>
           </tr>
