@@ -49,6 +49,11 @@ export const strainsAPI = {
     const response = await api.get(`/api/strains/${id}`);
     return response.data;
   },
+
+  getStats: async () => {
+    const response = await api.get('/api/strains/stats');
+    return response.data;
+  },
   
   create: async (strainData) => {
     const response = await api.post('/api/strains', strainData);

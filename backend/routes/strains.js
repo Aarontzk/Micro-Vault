@@ -147,6 +147,48 @@ router.get('/', authenticateToken, async (req, res) => {
   }
 });
 
+// GET /api/strains/stats - Collection summary (respects biosafety clearance)
+router.get('/stats', authenticateToken, async (req, res) => {
+  try {
+    const clearance = req.user.biosafety_clearance;
+    const where = 'WHERE deleted_at IS NULL AND biosafety_level <= $1';
+
+    const [totalR, typeR, bslR, sampleR, potR] = await Promise.all([
+      db.query(`SELECT COUNT(*)::int n FROM strains ${where}`, [clearance]),
+      db.query(`SELECT microorganism_type t, COUNT(*)::int n FROM strains ${where} GROUP BY 1`, [clearance]),
+      db.query(`SELECT biosafety_level b, COUNT(*)::int n FROM strains ${where} GROUP BY 1`, [clearance]),
+      db.query(`SELECT DISTINCT sample_type s FROM strains ${where} AND sample_type IS NOT NULL ORDER BY 1`, [clearance]),
+      db.query(`SELECT
+          COUNT(*) FILTER (WHERE potential_nitrogen_fixer)::int nitrogen_fixer,
+          COUNT(*) FILTER (WHERE potential_phosphate_solubilizer)::int phosphate_solubilizer,
+          COUNT(*) FILTER (WHERE potential_proteolytic)::int proteolytic,
+          COUNT(*) FILTER (WHERE potential_lipolytic)::int lipolytic,
+          COUNT(*) FILTER (WHERE potential_amylolytic)::int amylolytic,
+          COUNT(*) FILTER (WHERE potential_cellulolytic)::int cellulolytic,
+          COUNT(*) FILTER (WHERE potential_antimicrobial)::int antimicrobial,
+          COUNT(*) FILTER (WHERE potential_iaa_hormone)::int iaa_hormone,
+          COUNT(*) FILTER (WHERE genome_sequenced)::int sequenced
+        FROM strains ${where}`, [clearance]),
+    ]);
+
+    const byType = {};
+    typeR.rows.forEach((r) => { byType[r.t] = r.n; });
+    const byBsl = {};
+    bslR.rows.forEach((r) => { byBsl[r.b] = r.n; });
+
+    res.json({
+      total: totalR.rows[0].n,
+      byType,
+      byBsl,
+      sampleTypes: sampleR.rows.map((r) => r.s),
+      byPotential: potR.rows[0],
+    });
+  } catch (error) {
+    console.error('Stats error:', error);
+    res.status(500).json({ error: 'Failed to fetch stats' });
+  }
+});
+
 // GET /api/strains/:id - Get strain detail
 router.get('/:id', authenticateToken, async (req, res) => {
   try {

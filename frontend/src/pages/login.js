@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
+import { useLanguage } from '../i18n/LanguageContext';
+import LanguageToggle from '../components/LanguageToggle';
 
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useLanguage();
 
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
     setError('');
   };
 
@@ -26,20 +22,20 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     setError('');
-
     const result = await login(formData.email, formData.password);
-
     if (result.success) {
       navigate('/dashboard');
     } else {
-      setError(result.error);
+      setError(result.error || t('auth.loginFailed'));
     }
-
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="absolute top-4 right-4">
+        <LanguageToggle />
+      </div>
       <div className="max-w-md w-full">
         {/* Brand */}
         <div className="text-center mb-8">
@@ -47,11 +43,9 @@ function Login() {
             <img src="/logo192.png" alt="MicroVault Logo" className="h-16 w-16" />
           </div>
           <h1 className="mt-5 text-4xl font-bold text-ink tracking-tighter">
-            MicroVault
+            {t('common.appName')}
           </h1>
-          <p className="mt-2 text-sm text-ink-secondary">
-            Microbial Data Repository System
-          </p>
+          <p className="mt-2 text-sm text-ink-secondary">{t('common.tagline')}</p>
         </div>
 
         {/* Card */}
@@ -64,7 +58,7 @@ function Login() {
             )}
 
             <div>
-              <label htmlFor="email" className="mv-label">Email address</label>
+              <label htmlFor="email" className="mv-label">{t('auth.email')}</label>
               <input
                 id="email"
                 name="email"
@@ -74,12 +68,12 @@ function Login() {
                 value={formData.email}
                 onChange={handleChange}
                 className="mv-input"
-                placeholder="you@lab.com"
+                placeholder={t('auth.emailPlaceholder')}
               />
             </div>
 
             <div>
-              <label htmlFor="password" className="mv-label">Password</label>
+              <label htmlFor="password" className="mv-label">{t('auth.password')}</label>
               <input
                 id="password"
                 name="password"
@@ -93,12 +87,8 @@ function Login() {
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="mv-btn-primary mv-btn-lg w-full"
-            >
-              {loading ? 'Signing in…' : 'Sign in'}
+            <button type="submit" disabled={loading} className="mv-btn-primary mv-btn-lg w-full">
+              {loading ? t('auth.signingIn') : t('auth.signIn')}
             </button>
           </form>
         </div>

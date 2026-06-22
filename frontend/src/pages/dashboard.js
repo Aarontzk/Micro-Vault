@@ -1,11 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../utils/AuthContext';
+import { useLanguage } from '../i18n/LanguageContext';
+import LanguageToggle from '../components/LanguageToggle';
 import StrainList from './StrainList';
 
 function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
 
   const handleLogout = () => {
     logout();
@@ -20,22 +23,22 @@ function Dashboard() {
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center space-x-2">
               <img src="/logo192.png" alt="MicroVault Logo" className="h-7 w-7" />
-              <span className="text-lg font-bold text-ink tracking-tighter">MicroVault</span>
+              <span className="text-lg font-bold text-ink tracking-tighter">{t('common.appName')}</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-ink-secondary hidden sm:inline">
+            <div className="flex items-center gap-3">
+              <LanguageToggle />
+              <span className="text-sm text-ink-secondary hidden md:inline">
                 {user?.full_name}{' '}
                 <span className="text-neutral">({user?.role})</span>
               </span>
               <button onClick={handleLogout} className="mv-btn-danger mv-btn-sm">
-                Logout
+                {t('nav.logout')}
               </button>
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Content — Strain List */}
       <StrainList />
     </div>
   );
