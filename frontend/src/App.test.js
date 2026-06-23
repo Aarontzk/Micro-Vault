@@ -1,8 +1,23 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+function LoginCopySmoke() {
+  const { t } = useLanguage();
+  return (
+    <main>
+      <h1>{t('common.appName')}</h1>
+      <button type="button">{t('auth.signIn')}</button>
+    </main>
+  );
+}
+
+test('renders default Indonesian app copy', () => {
+  render(
+    <LanguageProvider>
+      <LoginCopySmoke />
+    </LanguageProvider>,
+  );
+
+  expect(screen.getByRole('heading', { name: 'MicroVault' })).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: 'Masuk' })).toBeInTheDocument();
 });

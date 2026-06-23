@@ -11,6 +11,38 @@ const api = axios.create({
   },
 });
 
+const AUTH_SESSION_ERROR_MESSAGES = new Set([
+  'Access token required',
+  'Invalid or expired token',
+  'User not found',
+  'Account disabled',
+]);
+
+export function isAuthSessionError(error) {
+  const status = error?.response?.status;
+  const message = error?.response?.data?.error;
+  return (status === 401 || status === 403) && AUTH_SESSION_ERROR_MESSAGES.has(message);
+}
+
+export function handleAuthSessionError(error, options = {}) {
+  if (!isAuthSessionError(error)) return false;
+
+  const storage = options.storage || (typeof window !== 'undefined' ? window.localStorage : null);
+  storage?.removeItem('token');
+  storage?.removeItem('user');
+
+  const location = options.location || (typeof window !== 'undefined' ? window.location : null);
+  if (location?.pathname !== '/login') {
+    if (typeof location?.assign === 'function') {
+      location.assign('/login');
+    } else if (location) {
+      location.href = '/login';
+    }
+  }
+
+  return true;
+}
+
 // Add token to requests
 api.interceptors.request.use(
   (config) => {
@@ -21,6 +53,14 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    handleAuthSessionError(error);
     return Promise.reject(error);
   }
 );
