@@ -7,9 +7,9 @@ module.exports = {
     extend: {
       colors: {
         // ThaiCloud brand palette (PMS-matched)
-        primary: '#0671B8',          // CTAs, links, focus, active — blue
-        'primary-hover': '#035897',  // darker blue hover
-        'primary-dark': '#035897',   // alias
+        primary: '#5E7B3B',          // CTAs, links, focus, active — moss green
+        'primary-hover': '#496030',  // darker moss hover
+        'primary-dark': '#496030',   // alias
         secondary: '#00A8A7',        // teal brand highlight
         neutral: '#9C9C9C',          // muted text, placeholders, disabled
         background: '#FAFAFA',       // page bg
@@ -40,8 +40,8 @@ module.exports = {
       },
       boxShadow: {
         card: '0 8px 30px rgba(0,0,0,0.08)',     // card hover
-        glow: '0 4px 12px rgba(6,113,184,0.35)', // primary button hover
-        focus: '0 0 0 3px rgba(6,113,184,0.12)', // focus ring
+        glow: '0 4px 12px rgba(94,123,59,0.35)', // primary button hover
+        focus: '0 0 0 3px rgba(94,123,59,0.12)', // focus ring
       },
     },
   },
