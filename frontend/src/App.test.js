@@ -18,6 +18,6 @@ test('renders default Indonesian app copy', () => {
     </LanguageProvider>,
   );
 
-  expect(screen.getByRole('heading', { name: 'MicroVault' })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: 'Repositori Isolat' })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: 'Masuk' })).toBeInTheDocument();
 });

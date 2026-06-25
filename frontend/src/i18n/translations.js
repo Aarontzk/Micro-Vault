@@ -4,8 +4,8 @@
 export const translations = {
   id: {
     common: {
-      appName: 'MicroVault',
-      tagline: 'Sistem Repositori Data Mikroba',
+      appName: 'Repositori Isolat',
+      tagline: 'Sistem Repositori Data Isolat Mikroba',
       loading: 'Memuat…',
       close: 'Tutup',
       cancel: 'Batal',
@@ -148,8 +148,8 @@ export const translations = {
   },
   en: {
     common: {
-      appName: 'MicroVault',
-      tagline: 'Microbial Data Repository System',
+      appName: 'Isolate Repository',
+      tagline: 'Microbial Isolate Data Repository System',
       loading: 'Loading…',
       close: 'Close',
       cancel: 'Cancel',
