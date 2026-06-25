@@ -22,7 +22,7 @@ function Dashboard() {
         <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center space-x-2">
-              <img src="/logo192.png" alt="Repositori Isolat Logo" className="h-7 w-7" />
+              <img src="/logo192.png" alt="MicroVault Logo" className="h-7 w-7" />
               <span className="text-lg font-bold text-ink tracking-tighter">{t('common.appName')}</span>
             </div>
             <div className="flex items-center gap-3">

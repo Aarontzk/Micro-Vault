@@ -40,7 +40,7 @@ function Login() {
         {/* Brand */}
         <div className="text-center mb-8">
           <div className="flex justify-center">
-            <img src="/logo192.png" alt="Repositori Isolat Logo" className="h-16 w-16" />
+            <img src="/logo192.png" alt="MicroVault Logo" className="h-16 w-16" />
           </div>
           <h1 className="mt-5 text-4xl font-bold text-ink tracking-tighter">
             {t('common.appName')}
